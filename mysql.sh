@@ -14,6 +14,8 @@ G="\e[32m"
 Y="\e[33m"
 echo "enter DB password:"
 read -s DB_ROOT_PASSWORD
+show databases;
+
 
 if [ $USERID -ne 0 ]
 then
