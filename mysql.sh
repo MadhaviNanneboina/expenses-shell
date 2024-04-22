@@ -12,7 +12,8 @@ B="\e[30m"
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
-
+echo "enter DB password:"
+read -s DB-ROOT-PASSWORD
 
 if [ $USERID -ne 0 ]
 then
@@ -42,8 +43,15 @@ systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "starting mysql"
 
 #shell is not idempotency by default if we exicute this script it will faile
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
-VALIDATE $? "setting up password"
+# mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+# VALIDATE $? "setting up password"
 
 # implementing idempotency
-#mysql -h db.vishruth.online -uroot -pShivaMadhu -e 'show databases;'
+mysql -h db.vishruth.online -uroot -p${DB-ROOT-PASSWORD} -e 'show databases;' &>>$LOGFILE
+if [ $? -ne 0 ]
+then
+mysql_secure_installation --set-root-pass${DB-ROOT-PASSWORD} &>>$LOGFILE
+VALIDATE $? "settingup root password"
+else
+ echo "root password already setup...skipping"
+ fi
