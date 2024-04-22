@@ -29,6 +29,7 @@ then
     exit 1
 else
     echo "$2 .....SUCCESS"
+    fi
     }
 
 dnf install mysql-server -y &>>$LOGFILE
