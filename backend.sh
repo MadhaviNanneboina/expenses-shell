@@ -8,7 +8,7 @@ SCRIPTNAME=$(echo $0 | cut -d "." -f1)
 LOGFILE=/tmp/$TIMESTAMP-$SCRIPTNAME.log
 
 #colors
-B="\e[30m"
+N="\e[0m"
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
@@ -20,10 +20,10 @@ read db_password
 VALIDATE(){
 if [ $1 -ne 0 ]
 then
-    echo -e "$2 ...$R FAILURE $B"
+    echo -e "$2 ...$R FAILURE $N"
     exit 1
 else
-    echo -e "$2 ...$G SUCCESS $B"
+    echo -e "$2 ...$G SUCCESS $N"
 fi
 }
 
