@@ -64,6 +64,7 @@ curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expen
 VALIDATE $? "downloading backend code"
 
 cd /app
+rm -rf /app/*
 unzip /tmp/backend.zip &>>LOGFILE
 VALIDATE $? "unzipping the backend code"
 
@@ -82,13 +83,13 @@ VALIDATE $? "start backend service"
 systemctl enable backend &>>LOGFILE
 VALIDATE $? "enabling backend service"
 
-dnf install mysql &>>LOGFILE
-VALIDATE $1 "installing mysql client"
+dnf install mysql -y &>>LOGFILE
+VALIDATE $? "installing mysql client"
 
 mysql -h db.vishruth.online -uroot -p${db_root_password} < /app/schema/backend.sql &>>LOGFILE
-VALIDATE $1 "validate schema loading"
+VALIDATE $? "validate schema loading"
 
 systemctl restart backend &>>LOGFILE
-VALIDATE $1 "restating backend"
+VALIDATE $? "restating backend"
 
 
