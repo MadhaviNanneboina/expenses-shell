@@ -12,7 +12,21 @@ B="\e[30m"
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
-N="\e[30m"
+
+echo "enter DB password:"
+read db_password
+
+
+VALIDATE(){
+if [ $1 -ne 0 ]
+then
+    echo -e "$2 ...$R FAILURE $B"
+    exit 1
+else
+    echo -e "$2 ...$G SUCCESS $B"
+fi
+}
+
 
 if [ $USERID -ne 0 ]
 then
@@ -22,15 +36,7 @@ else
     echo "your super user"
 fi
 
-VALIDATE(){
-if [ $1 -ne 0 ]
-then
-    echo -e "$2 ...$R FAILURE $N"
-    exit 1
-else
-    echo -e "$2 ...$G SUCCESS $N"
-fi
-}
+
 
 dnf module disable nodejs -y &>>LOGFILE
 VALIDATE $? "disabling nodejs"
