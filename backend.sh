@@ -39,7 +39,7 @@ dnf module enable nodejs:20 -y &>>LOGFILE
 VALIDATE $? "enabling nodejs"
 
 dnf install nodejs -y &>>LOGFILE
-VALIDATE $? "install nodejs"
+VALIDATE $? "installing nodejs"
 
 useradd expense 
 VALIDATE $? "adding user"
