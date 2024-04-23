@@ -12,9 +12,9 @@ B="\e[30m"
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
+N="\e[0m"
 echo "enter DB password:"
-read -s DB_ROOT_PASSWORD
-# show databases;
+read -s db_root_password
 
 
 if [ $USERID -ne 0 ]
@@ -28,10 +28,10 @@ fi
 VALIDATE(){
 if [ $1 -ne 0 ]
 then
-    echo "$2 .....FAILURE"
+    echo -e "$2 ..... $R FAILURE $N"
     exit 1
 else
-    echo "$2 .....SUCCESS"
+    echo "$2 .....$G SUCCESS $N"
     fi
     }
 
@@ -49,11 +49,11 @@ VALIDATE $? "starting mysql"
 # VALIDATE $? "setting up password"
 
 # implementing idempotency
-mysql -h db.vishruth.online -uroot -p${DB_ROOT_PASSWORD}  -e 'show databases;' &>>$LOGFILE
+mysql -h db.vishruth.online -uroot -p${db_root_password}  -e 'show databases;' &>>$LOGFILE
 if [ $? -ne 0 ]
 then
-mysql_secure_installation --set-root-pass ${DB_ROOT_PASSWORD} &>>$LOGFILE
+mysql_secure_installation --set-root-pass ${db_root_password} &>>$LOGFILE
 VALIDATE $? "settingup root password"
 else
-echo "root password already setup...skipping"
+echo -e "root password already setup... $Y skipping $N"
 fi
