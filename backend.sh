@@ -14,7 +14,7 @@ G="\e[32m"
 Y="\e[33m"
 
 echo "enter DB password:"
-read db_password
+read -s db_root_password
 
 
 VALIDATE(){
@@ -59,15 +59,35 @@ fi
 mkdir -p /app
 VALIDATE $? "creating app directory"
 
-curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>LOGFILE
 VALIDATE $? "downloading backend code"
 
 cd /app
-unzip /tmp/backend.zip
+unzip /tmp/backend.zip &>>LOGFILE
 VALIDATE $? "unzipping the backend code"
 
-npm install
+npm install &>>LOGFILE
 VALIDATE $? "installing dependencies"
 
+cp /home/ec2-user/expenses-shell/backend.service /etc/systemd/system/backend.service &>>LOGFILE
+VALIDATE $? "copied backend service"
+
+systemctl daemon-reload &>>LOGFILE
+VALIDATE $? "validate deamon reload"
+
+systemctl start backend &>>LOGFILE
+VALIDATE $? "start backend service"
+
+systemctl enable backend &>>LOGFILE
+VALIDATE $? "enabling backend service"
+
+dnf install mysql -y &>>LOGFILE
+VALIDATE $1 "installing mysql client"
+
+mysql -h db.vishruth.online -uroot -p${db_root_password} < /app/schema/backend.sql &>>LOGFILE
+VALIDATE $1 "validate schema loading"
+
+systemctl restart backend &>>LOGFILE
+VALIDATE $1 "restating backend"
 
 
