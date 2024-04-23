@@ -45,16 +45,16 @@ systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "starting mysql"
 
 #shell is not idempotency by default if we exicute this script it will faile
-# mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
-# VALIDATE $? "setting up password"
+mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+VALIDATE $? "setting up password"
 
 # implementing idempotency
-mysql -h db.vishruth.online -uroot -p${DB_ROOT_PASSWORD}  -e 'show databases;' &>>$LOGFILE
-if [ $? -ne 0 ]
-then
-mysql_secure_installation --set-root-pass ${DB_ROOT_PASSWORD} &>>$LOGFILE
-VALIDATE $? "settingup root password"
-else
- echo "root password already setup...skipping"
- fi
- mysql_secure_installation --set-root-pass ExpenseApp@1
+# mysql -h db.vishruth.online -uroot -p${DB_ROOT_PASSWORD}  -e 'show databases;' &>>$LOGFILE
+# if [ $? -ne 0 ]
+# then
+# mysql_secure_installation --set-root-pass ${DB_ROOT_PASSWORD} &>>$LOGFILE
+# VALIDATE $? "settingup root password"
+# else
+#  echo "root password already setup...skipping"
+#  fi
+#  mysql_secure_installation --set-root-pass ExpenseApp@1
