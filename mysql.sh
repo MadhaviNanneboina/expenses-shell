@@ -12,8 +12,8 @@ B="\e[30m"
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
-# echo "enter DB password:"
-# read -s DB_ROOT_PASSWORD
+echo "enter DB password:"
+read -s DB_ROOT_PASSWORD
 # show databases;
 
 
