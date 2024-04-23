@@ -12,6 +12,7 @@ B="\e[30m"
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
+N="\e[30m"
 
 if [ $USERID -ne 0 ]
 then
