@@ -28,8 +28,8 @@ then
     echo -e "$2 .....$R FAILURE $N"
     exit 1
 else
-    echo -e "$2 .....$G SUCCESS $N"
-    fi
+    echo -e "$2 .....SUCCESS"
+fi
     }
 
 dnf module disable nodejs -y &>>LOGFILE
