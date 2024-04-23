@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#implementing mysql DB using shell script
+#implementing backend using shell script
 
 USERID=$(id -u)
 TIMESTAMP=$(date +%F-%H-%M-%S)
@@ -57,6 +57,7 @@ else
     echo -e "user already exists...$Y SKIPPING $N"
 
 fi
+
 mkdir -p /app
 VALIDATE $? "creating app directory"
 
