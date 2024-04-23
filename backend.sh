@@ -24,9 +24,21 @@ fi
 VALIDATE(){
 if [ $1 -ne 0 ]
 then
-    echo "$2 .....FAILURE"
+    echo -e "$2 .....$R FAILURE $N"
     exit 1
 else
-    echo "$2 .....SUCCESS"
+    echo "$2 .....$G SUCCESS $N"
     fi
     }
+
+dnf module disable nodejs -y &>>LOGFILE
+VALIDATE $? "disabling nodejs"
+
+dnf module enable nodejs:20 -y &>>LOGFILE
+VALIDATE $? "enabling nodejs"
+
+dnf install nodejs -y &>>LOGFILE
+VALIDATE $? "install nodejs"
+
+useradd expense 
+VALIDATE $? "adding user"
