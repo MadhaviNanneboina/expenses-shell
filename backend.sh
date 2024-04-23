@@ -18,6 +18,7 @@ read -s db_root_password
 
 
 VALIDATE(){
+
 if [ $1 -ne 0 ]
 then
     echo -e "$2 ...$R FAILURE $N"
@@ -81,7 +82,7 @@ VALIDATE $? "start backend service"
 systemctl enable backend &>>LOGFILE
 VALIDATE $? "enabling backend service"
 
-dnf install mysql -y &>>LOGFILE
+dnf install mysql &>>LOGFILE
 VALIDATE $1 "installing mysql client"
 
 mysql -h db.vishruth.online -uroot -p${db_root_password} < /app/schema/backend.sql &>>LOGFILE
